@@ -1,7 +1,7 @@
 import React, {createContext, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
-const LogContext = createContext('안녕하세요');
+const LogContext = createContext('');
 
 export function LogContextProvider({children}) {
   const onCreate = ({title, body, date}) => {
@@ -12,6 +12,16 @@ export function LogContextProvider({children}) {
       date,
     };
     setLogs([log, ...logs]);
+  };
+
+  const onModify = modified => {
+    const nextLogs = logs.map(log => (log.id === modified.id ? modified : log));
+    setLogs(nextLogs);
+  };
+
+  const onRemove = id => {
+    const nextLogs = logs.filter(log => log.id !== id);
+    setLogs(nextLogs);
   };
 
   const [logs, setLogs] = useState(
@@ -25,7 +35,7 @@ export function LogContextProvider({children}) {
       .reverse(),
   );
   return (
-    <LogContext.Provider value={{logs, onCreate}}>
+    <LogContext.Provider value={{logs, onCreate, onModify, onRemove}}>
       {children}
     </LogContext.Provider>
   );

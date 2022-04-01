@@ -2,6 +2,7 @@ import React from 'react';
 import {Platform, Pressable, StyleSheet, Text} from 'react-native';
 import {format, formatDistanceToNow} from 'date-fns';
 import {ko} from 'date-fns/locale';
+import {useNavigation} from '@react-navigation/native';
 
 const formatDate = date => {
   const d = new Date(date);
@@ -26,6 +27,13 @@ const truncate = text => {
 
 const FeedListItem = ({log}) => {
   const {title, body, date} = log;
+  const navigation = useNavigation();
+
+  const onPress = () => {
+    navigation.navigate('Write', {
+      log,
+    });
+  };
 
   return (
     <Pressable
@@ -33,7 +41,8 @@ const FeedListItem = ({log}) => {
         styles.block,
         Platform.OS === 'ios' && pressed && {background: '#efefef'},
       ]}
-      android_ripple={{color: '#ededed'}}>
+      android_ripple={{color: '#ededed'}}
+      onPress={onPress}>
       <Text style={styles.date}>{formatDate(date)}</Text>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.body}>{truncate(body)}</Text>
@@ -53,7 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    collor: '#263238',
+    color: '#263238',
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
