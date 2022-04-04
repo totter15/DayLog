@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import FeedListItem from './FeedListItem';
 
-const FeedList = ({logs, onScrollToBottom}) => {
+const FeedList = ({logs, onScrollToBottom, ListHeaderComponents}) => {
   const onScroll = e => {
     if (!onScrollToBottom) {
       return;
@@ -25,6 +25,7 @@ const FeedList = ({logs, onScrollToBottom}) => {
       keyExtractor={log => log.id}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       onScroll={onScroll}
+      ListHeaderComponent={ListHeaderComponents}
     />
   );
 };
