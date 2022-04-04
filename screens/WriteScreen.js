@@ -13,7 +13,7 @@ const WriteScreen = ({route}) => {
   const [body, setBody] = useState(log?.body ?? '');
   const navigation = useNavigation();
 
-  const {onCreate, onModify} = useContext(LogContext);
+  const {onCreate, onModify, onRemove} = useContext(LogContext);
   const onSave = () => {
     if (log) {
       onModify({
